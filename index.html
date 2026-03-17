@@ -2,473 +2,1378 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <title>瑞士旅遊 2026</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="瑞士12天自駕旅遊規劃 2026/6/13-6/24">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>交易 Journal Pro</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="交易日誌">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <style>
     :root {
-      --theme-color: #e63946;
+      --bg-color: #f4f6f8;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
     }
 
-    /* ── Sidebar ── */
-    .sidebar-nav > ul > li > a {
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding-bottom: 70px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-color);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: var(--card-bg);
+      padding: 16px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    /* Tab Pages */
+    .tab-page { display: none; }
+    .tab-page.active { display: block; }
+
+    .form-card {
+      background: var(--card-bg);
+      margin: 16px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .input-group { margin-bottom: 16px; }
+    .input-row { display: flex; gap: 12px; }
+    .input-row .input-group { flex: 1; }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #fafafa;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .r-display {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: var(--success);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .r-display.negative {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: var(--danger);
+    }
+
+    .btn-save {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-save:active { opacity: 0.85; }
+
+    /* 底部導航列 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 4px 16px;
+      border-radius: 8px;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
       font-weight: bold;
     }
 
-    /* ── Tables ── */
-    .markdown-section table {
-      display: table;
-      width: 100%;
-    }
-    .markdown-section td, .markdown-section th {
-      padding: 8px 12px;
-    }
-
-    /* ── Cover Page ── */
-    section.cover {
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #2e6da4 100%) !important;
-    }
-    section.cover .cover-main {
-      color: #fff;
-    }
-    section.cover h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: #fff !important;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
-      margin-bottom: 0.2em;
-    }
-    section.cover blockquote {
-      border: none;
-      font-size: 1.2rem;
-      color: rgba(255,255,255,0.85);
-      margin: 0.5em 0 1.5em;
-    }
-    section.cover blockquote p {
-      color: rgba(255,255,255,0.85);
-    }
-    section.cover .cover-main > p:last-child a {
-      border-radius: 30px;
-      font-size: 1rem;
-      padding: 12px 32px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      transition: all 0.25s;
-    }
-    section.cover .cover-main > p:last-child a:first-child {
-      background: #e63946;
-      border: 2px solid #e63946;
-      color: #fff;
-    }
-    section.cover .cover-main > p:last-child a:first-child:hover {
-      background: #c1121f;
-      border-color: #c1121f;
-    }
-    section.cover .cover-main > p:last-child a:last-child {
-      background: transparent;
-      border: 2px solid rgba(255,255,255,0.6);
-      color: #fff;
-      margin-left: 12px;
-    }
-    section.cover .cover-main > p:last-child a:last-child:hover {
-      border-color: #fff;
-      background: rgba(255,255,255,0.1);
-    }
-
-    /* ── Modal ── */
-    .spot-modal-overlay {
+    /* PWA 安裝提示 Banner */
+    .install-banner {
       display: none;
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 9999;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 448px;
+      background: var(--text-main);
+      color: white;
+      border-radius: 12px;
+      padding: 14px 16px;
       align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(3px);
-      animation: overlayIn 0.25s ease;
+      gap: 12px;
+      z-index: 30;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
-    .spot-modal-overlay.active { display: flex; }
-    @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
-    .spot-modal {
-      background: #fff;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 560px;
-      max-height: 85vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
-    }
-    @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.85) translateY(20px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-    .spot-modal-hero {
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .spot-modal-hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
-    }
-    .spot-modal-hero-text {
-      position: absolute;
-      bottom: 16px; left: 20px;
-      z-index: 1; color: #fff;
-    }
-    .spot-modal-hero-text h2 {
-      margin: 0; font-size: 1.5rem; font-weight: 800;
-      color: #fff; border: none; padding: 0; line-height: 1.2;
-    }
-    .spot-modal-hero-text span { font-size: 0.85rem; opacity: 0.85; }
-    .spot-modal-close {
-      position: absolute; top: 14px; right: 14px; z-index: 2;
-      background: rgba(0,0,0,0.4); border: none; cursor: pointer;
-      color: #fff; font-size: 1.1rem;
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-    }
-    .spot-modal-close:hover { background: rgba(0,0,0,0.7); }
-    .spot-modal-body { padding: 20px 24px 24px; overflow-y: auto; }
-    .spot-modal-day-badge {
-      display: inline-block; font-size: 0.75rem; font-weight: 600;
-      background: #f0f4ff; color: #2e6da4;
-      border-radius: 20px; padding: 3px 12px; margin-bottom: 16px;
-    }
-    .spot-modal-section { margin-bottom: 16px; }
-    .spot-modal-section h4 {
-      font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: #bbb; margin: 0 0 8px; border: none; padding: 0;
-    }
-    .spot-modal-section ul { margin: 0; padding-left: 1.2em; }
-    .spot-modal-section ul li { font-size: 0.88rem; color: #444; margin-bottom: 4px; }
-    .spot-modal-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    .spot-modal-table td { padding: 6px 10px; border-bottom: 1px solid #f0f0f0; }
-    .spot-modal-table td:first-child { color: #999; width: 80px; }
-    .spot-modal-link {
-      display: inline-block; margin-top: 14px; font-size: 0.85rem; font-weight: 600;
-      color: #e63946; text-decoration: none;
-      border: 1.5px solid #e63946; border-radius: 20px;
-      padding: 6px 18px; transition: all 0.2s;
-    }
-    .spot-modal-link:hover { background: #e63946; color: #fff; }
 
-    /* 封面統計數字 */
-    .cover-stats {
+    .install-banner .install-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .install-banner .install-text { flex: 1; font-size: 0.88rem; line-height: 1.4; }
+    .install-banner .install-text strong { display: block; font-size: 0.95rem; }
+    .install-banner .install-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+    .btn-install {
+      padding: 8px 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-dismiss {
+      padding: 8px 10px;
+      background: transparent;
+      color: #9ca3af;
+      border: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* 安全區域支援（iPhone 劉海/底部手勢條） */
+    body { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }
+    .bottom-nav { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+
+    /* ============ 盤前分頁 ============ */
+    .condition-tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.85rem;
+      margin: 4px 4px 0 0;
+      cursor: pointer;
+    }
+    .condition-tag.selected {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .mood-selector {
       display: flex;
-      gap: 2.5rem;
-      justify-content: center;
-      margin: 1.8rem 0 2rem;
+      gap: 8px;
       flex-wrap: wrap;
     }
-    .cover-stats .stat {
+
+    .mood-btn {
+      flex: 1;
+      min-width: 70px;
+      padding: 10px 6px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fafafa;
+      font-size: 1.3rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .mood-btn.selected {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .mood-btn span {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .plan-watchlist {
+      list-style: none;
+    }
+
+    .plan-watchlist li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    .plan-watchlist li:last-child { border-bottom: none; }
+    .watchlist-symbol { font-weight: bold; color: var(--text-main); }
+    .watchlist-note { font-size: 0.8rem; color: var(--text-muted); }
+    .watchlist-remove { color: var(--danger); cursor: pointer; font-size: 1.1rem; padding: 0 4px; }
+
+    /* ============ 統計分頁 ============ */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-box {
+      background: var(--bg-color);
+      border-radius: 10px;
+      padding: 14px;
       text-align: center;
     }
-    .cover-stats .stat .num {
-      display: block;
-      font-size: 2rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1;
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--primary);
     }
-    .cover-stats .stat .label {
+
+    .stat-value.positive { color: var(--success); }
+    .stat-value.negative { color: var(--danger); }
+
+    .stat-label {
       font-size: 0.8rem;
-      color: rgba(255,255,255,0.65);
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      color: var(--text-muted);
       margin-top: 4px;
     }
+
+    .trade-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .trade-list-item:last-child { border-bottom: none; }
+
+    .trade-meta { font-size: 0.8rem; color: var(--text-muted); }
+    .trade-symbol { font-weight: bold; font-size: 1rem; }
+    .trade-r { font-weight: bold; font-size: 1.1rem; }
+    .trade-r.positive { color: var(--success); }
+    .trade-r.negative { color: var(--danger); }
+
+    .bar-container {
+      margin-bottom: 10px;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      margin-bottom: 4px;
+      color: var(--text-muted);
+    }
+
+    .bar-track {
+      background: var(--bg-color);
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: var(--primary);
+      transition: width 0.4s ease;
+    }
+
+    .bar-fill.positive { background: var(--success); }
+    .bar-fill.negative { background: var(--danger); }
+
+    .emotion-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: bold;
+    }
+
+    .emotion-tag.calm { background: #d1fae5; color: #065f46; }
+    .emotion-tag.fomo { background: #fef3c7; color: #92400e; }
+    .emotion-tag.panic { background: #fee2e2; color: #991b1b; }
+    .emotion-tag.greed { background: #fce7f3; color: #9d174d; }
+    .emotion-tag.anxious { background: #e0e7ff; color: #3730a3; }
+    .emotion-tag.revenge { background: #f3e8ff; color: #6b21a8; }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .filter-btn {
+      flex-shrink: 0;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      background: #fafafa;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* ============ 設定分頁 ============ */
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .setting-row:last-child { border-bottom: none; }
+
+    .setting-label { font-size: 0.95rem; }
+    .setting-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+    .setting-input {
+      width: 100px;
+      text-align: right;
+      padding: 6px 10px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .toggle-switch input { display: none; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #d1d5db;
+      border-radius: 24px;
+      transition: background 0.2s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .toggle-switch input:checked + .toggle-slider { background: var(--primary); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    .strategy-tag-edit {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      border-radius: 20px;
+      padding: 4px 10px 4px 14px;
+      font-size: 0.85rem;
+      margin: 4px 4px 0 0;
+    }
+
+    .strategy-tag-edit .remove { cursor: pointer; color: var(--text-muted); font-size: 1rem; }
+
+    .btn-outline {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-danger {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 40px 20px;
+      font-size: 0.95rem;
+    }
+    .empty-state .emoji { font-size: 2.5rem; margin-bottom: 10px; }
   </style>
 </head>
 <body>
-  <div id="app">Loading...</div>
 
-  <!-- Modal Overlay -->
-  <div class="spot-modal-overlay" id="spotModalOverlay" onclick="closeSpotModal(event)">
-    <div class="spot-modal" id="spotModal">
-      <div class="spot-modal-hero" id="modalHero">
-        <button class="spot-modal-close" onclick="closeModal()">✕</button>
-        <div class="spot-modal-hero-text">
-          <h2 id="modalTitle"></h2>
-          <span id="modalEn"></span>
+<!-- PWA 安裝提示 Banner -->
+<div class="install-banner" id="install-banner">
+  <div class="install-icon">📲</div>
+  <div class="install-text">
+    <strong>加入主畫面</strong>
+    安裝後可離線使用，開啟更快速
+  </div>
+  <div class="install-actions">
+    <button class="btn-install" onclick="installApp()">安裝</button>
+    <button class="btn-dismiss" onclick="dismissInstall()">✕</button>
+  </div>
+</div>
+
+<div class="app-container">
+  <div class="header" id="pageTitle">新增交易紀錄</div>
+
+  <!-- ==================== 盤前分頁 ==================== -->
+  <div class="tab-page" id="page-premarket">
+
+    <div class="form-card">
+      <div class="section-title">今日狀態評估</div>
+      <label>開盤前心理狀態</label>
+      <div class="mood-selector" id="moodSelector">
+        <div class="mood-btn" data-mood="great" onclick="selectMood(this)">😄<span>狀態絕佳</span></div>
+        <div class="mood-btn" data-mood="good" onclick="selectMood(this)">🙂<span>狀態良好</span></div>
+        <div class="mood-btn" data-mood="ok" onclick="selectMood(this)">😐<span>普通</span></div>
+        <div class="mood-btn" data-mood="tired" onclick="selectMood(this)">😴<span>疲倦</span></div>
+        <div class="mood-btn" data-mood="anxious" onclick="selectMood(this)">😰<span>焦慮</span></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="section-title">市場環境判斷</div>
+      <div class="input-group">
+        <label>大盤趨勢</label>
+        <select id="marketTrend">
+          <option value="uptrend">上升趨勢 📈</option>
+          <option value="downtrend">下降趨勢 📉</option>
+          <option value="sideways">盤整 ↔️</option>
+          <option value="volatile">高波動 ⚡</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>今日交易許可</label>
+        <select id="tradingPermission">
+          <option value="full">完整交易 ✅</option>
+          <option value="reduced">縮小規模 ⚠️</option>
+          <option value="observe">僅觀察，不交易 🔍</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>今日備忘（重要事件/財報/法說會）</label>
+        <textarea id="marketNotes" rows="2" placeholder="例如：下午2點 Fed 利率決議..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="section-title">今日觀察清單</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>標的代號</label>
+          <input type="text" id="watchSymbol" placeholder="例如：2330">
+        </div>
+        <div class="input-group">
+          <label>觀察理由</label>
+          <input type="text" id="watchReason" placeholder="例如：突破整理區">
         </div>
       </div>
-      <div class="spot-modal-body" id="modalBody"></div>
+      <button class="btn-outline" onclick="addWatchItem()">＋ 加入觀察清單</button>
+      <ul class="plan-watchlist" id="watchlist" style="margin-top:14px;">
+        <!-- 動態產生 -->
+      </ul>
     </div>
+
+    <div class="form-card">
+      <div class="section-title">今日操作規則提醒（自設）</div>
+      <div id="rulesDisplay" style="margin-bottom:12px; display:flex; flex-wrap:wrap;">
+        <!-- 從設定讀取規則並顯示 -->
+      </div>
+      <div class="input-group">
+        <label>今日額外提醒</label>
+        <textarea id="todayReminder" rows="2" placeholder="例如：今天不追高，只等回測..."></textarea>
+      </div>
+      <button class="btn-save" onclick="savePremarket()">儲存今日盤前計劃</button>
+    </div>
+
   </div>
 
-  <script>
-    window.$docsify = {
-      name: '瑞士旅遊 2026',
-      coverpage: true,
-      onlyCover: false,
-      loadSidebar: true,
-      subMaxLevel: 3,
-      auto2top: true,
-      search: {
-        placeholder: '搜尋',
-        noData: '找不到結果',
-        depth: 3
-      },
-      pagination: {
-        previousText: '上一頁',
-        nextText: '下一頁'
-      }
-    }
-  </script>
-  <!-- Docsify -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- Search plugin -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <!-- Pagination -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  <!-- Marked (Markdown parser) -->
-  <script src="//cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- ==================== 交易分頁 ==================== -->
+  <div class="tab-page active" id="page-trade">
 
-  <script>
-    var spotsData = {
-      'docs/景點/蘇黎世.md': {
-        img: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=800&q=80',
-        md: `## 行程：D1（6/13）抵達、D11（6/23）過境、D12（6/24）離境
+    <div class="form-card">
+      <div class="section-title">基本資料</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>標的代號</label>
+          <input type="text" id="symbol" placeholder="例如：2330">
+        </div>
+        <div class="input-group">
+          <label>方向</label>
+          <select id="direction">
+            <option value="long">做多 (Long)</option>
+            <option value="short">做空 (Short)</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>策略分類</label>
+        <select id="strategy" class="strategy-select-dynamic">
+          <!-- 從設定動態載入 -->
+        </select>
+      </div>
+    </div>
 
-## 景點
-- 林登霍夫山 Lindenhof（俯瞰老城）
-- 班霍夫大街 Bahnhofstrasse（購物大道）
-- 蘇黎世老城區漫步
+    <div class="form-card">
+      <div class="section-title">價格與 R 倍數 (自動計算)</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>進場價 (Entry)</label>
+          <input type="number" step="0.01" id="entryPrice" placeholder="0.00">
+        </div>
+        <div class="input-group">
+          <label>停損價 (Stop Loss)</label>
+          <input type="number" step="0.01" id="stopLoss" placeholder="0.00">
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>出場價 (Exit)</label>
+          <input type="number" step="0.01" id="exitPrice" placeholder="0.00">
+        </div>
+      </div>
+      <div id="rDisplay" class="r-display">0.00 R</div>
+    </div>
 
-## 餐廳
-- **Zeughauskeller**（軍火庫餐廳）— 烤香腸、啤酒
+    <div class="form-card">
+      <div class="section-title">心理與行為審查</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>進場情緒</label>
+          <select id="entryEmotion">
+            <option value="calm">冷靜 / 照計畫</option>
+            <option value="fomo">FOMO / 怕錯過</option>
+            <option value="anxious">焦慮 / 猶豫</option>
+            <option value="revenge">報復性交易</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>出場情緒</label>
+          <select id="exitEmotion">
+            <option value="calm">冷靜 / 達標出場</option>
+            <option value="greed">貪婪 / 想賺更多</option>
+            <option value="panic">恐慌 / 提早平倉</option>
+          </select>
+        </div>
+      </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 距機場 | 市區約 20 分鐘 |
-| 停車 | 建議飯店停車場 |
-`
-      },
-      'docs/景點/琉森.md': {
-        img: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=800&q=80',
-        md: `## 行程：D2–D3（6/14–6/15）
+      <div class="input-group">
+        <label>是否完全遵守計畫？</label>
+        <select id="planFollowed">
+          <option value="true">✅ 是，完全遵守</option>
+          <option value="false">❌ 否，發生紀律偏移</option>
+        </select>
+      </div>
 
-## 景點
-- 卡貝爾橋 Chapel Bridge（木廊橋、水塔）
-- 垂死獅子像 Lion Monument
-- 穆塞格城牆 Musegg Wall（俯瞰湖景）
-- 琉森湖畔兜風
+      <div class="input-group">
+        <label>盤後檢討與備註</label>
+        <textarea id="notes" rows="3" placeholder="寫下這筆交易的反思..."></textarea>
+      </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 距蘇黎世 | 車程約 50 分鐘 |
-| 停車 | 老城區付費停車場 |
-`
-      },
-      'docs/景點/瑞吉山.md': {
-        img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80',
-        md: `## 行程：D3（6/15）
+      <button class="btn-save" onclick="saveTrade()">儲存紀錄</button>
+    </div>
 
-## 路線
-- 開車至 Vitznau → 搭登山齒軌火車上山
-- 健行：Rigi Kulm → Rigi Kaltbad
+  </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 搭車地點 | Vitznau 登山火車站 |
-| 海拔 | Rigi Kulm 1,798 m |
-`
-      },
-      'docs/景點/格林德瓦.md': {
-        img: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80',
-        md: `## 行程：D4–D7（6/16–6/19）
+  <!-- ==================== 統計分頁 ==================== -->
+  <div class="tab-page" id="page-stats">
 
-## 景點
-- 艾格峰北壁 Eiger North Face 夕陽
-- First Cliff Walk 懸崖步道
-- Bachalpsee 高山湖健行
-- 米倫 Mürren 無車小鎮
-- 冒險活動（滑翔傘、高空飛索）
+    <div class="form-card">
+      <div class="section-title">整體績效摘要</div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">總交易筆數</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-winrate">0%</div>
+          <div class="stat-label">勝率</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-avgr">0.00R</div>
+          <div class="stat-label">平均 R 倍數</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-planfollow">0%</div>
+          <div class="stat-label">計畫遵守率</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="bar-label">
+          <span>獲利 R 加總</span>
+          <span id="stat-totalr">0.00R</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill positive" id="stat-totalr-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 距琉森 | 車程約 1.5 小時 |
-| 停車 | 飯店或 Grindelwald Terminal |
-`
-      },
-      'docs/景點/少女峰.md': {
-        img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-        md: `## 行程：D5（6/17）
+    <div class="form-card">
+      <div class="section-title">策略績效分析</div>
+      <div id="strategy-stats">
+        <!-- 動態產生每個策略的勝率條 -->
+      </div>
+    </div>
 
-## 路線
-- Eiger Express 纜車快速上山
-- 斯芬克斯觀景台 Sphinx Observatory（3,571 m）
-- 阿萊奇冰川 Aletsch Glacier 體驗
-- Eiger Walk 稜線步道
+    <div class="form-card">
+      <div class="section-title">情緒 vs 結果</div>
+      <div id="emotion-stats">
+        <!-- 不同進場情緒對應的平均 R -->
+      </div>
+    </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 官網 | jungfrau.ch |
-| 建議 | 提前線上購票，避免排隊 |
-`
-      },
-      'docs/景點/瀑布鎮.md': {
-        img: 'https://images.unsplash.com/photo-1543722530-d2c3201371e6?w=800&q=80',
-        md: `## 行程：D7（6/19）
+    <div class="form-card">
+      <div class="section-title">篩選</div>
+      <div class="filter-row">
+        <div class="filter-btn active" onclick="setFilter('all', this)">全部</div>
+        <div class="filter-btn" onclick="setFilter('win', this)">獲利</div>
+        <div class="filter-btn" onclick="setFilter('loss', this)">虧損</div>
+        <div class="filter-btn" onclick="setFilter('plan-yes', this)">遵守計畫</div>
+        <div class="filter-btn" onclick="setFilter('plan-no', this)">未遵守</div>
+      </div>
+    </div>
 
-## 景點
-- 施陶河瀑布 Staubbach Falls（300 m 落差）
-- 米倫 Mürren（無車小鎮）
-- Allmendhubel 觀景台
+    <div class="form-card" id="trade-list-card">
+      <div class="section-title">交易紀錄列表</div>
+      <div id="trade-list">
+        <div class="empty-state">
+          <div class="emoji">📭</div>
+          尚無交易紀錄<br>到「交易」分頁新增第一筆吧！
+        </div>
+      </div>
+    </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 距格林德瓦 | 車程約 20 分鐘 |
-| 停車 | Lauterbrunnen 停車場後搭纜車 |
-`
-      },
-      'docs/景點/策馬特.md': {
-        img: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&q=80',
-        md: `## 行程：D8–D9（6/20–6/21）
+  </div>
 
-## 景點
-- 馬特洪峰 Matterhorn（4,478 m）夜景
-- 葛納葛特 Gornergrat 齒軌火車
-- 策馬特市區（無燃油車小鎮）
+  <!-- ==================== 設定分頁 ==================== -->
+  <div class="tab-page" id="page-settings">
 
-## 交通
-- Täsch 停車 → 接駁火車進策馬特（約 12 分鐘）
+    <div class="form-card">
+      <div class="section-title">風險管理參數</div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">每筆最大風險 (%)</div>
+          <div class="setting-desc">佔帳戶資金比例</div>
+        </div>
+        <input type="number" class="setting-input" id="cfg-maxRisk" value="1" min="0.1" max="10" step="0.1">
+      </div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">每日最大虧損上限 (R)</div>
+          <div class="setting-desc">達到後停止交易</div>
+        </div>
+        <input type="number" class="setting-input" id="cfg-dailyMaxLoss" value="-3" max="0" step="0.5">
+      </div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">最低勝率警示 (%)</div>
+          <div class="setting-desc">低於此值顯示警告</div>
+        </div>
+        <input type="number" class="setting-input" id="cfg-minWinRate" value="40" min="0" max="100">
+      </div>
+    </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| Täsch 停車 | 每日約 CHF 15 |
-| 葛納葛特訂票 | gornergrat.ch |
-`
-      },
-      'docs/景點/聖莫里茲.md': {
-        img: 'https://images.unsplash.com/photo-1491555103944-7c647fd857e6?w=800&q=80',
-        md: `## 行程：D9–D11（6/21–6/23）
+    <div class="form-card">
+      <div class="section-title">策略清單管理</div>
+      <div id="strategy-tags" style="margin-bottom: 14px;">
+        <!-- 動態產生 -->
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <input type="text" id="newStrategy" placeholder="輸入新策略名稱...">
+        </div>
+        <div style="flex-shrink:0; padding-top:0px;">
+          <button class="btn-save" style="margin-top:0; padding:10px 18px; width:auto;" onclick="addStrategy()">新增</button>
+        </div>
+      </div>
+    </div>
 
-## 景點
-- 聖莫里茲湖畔散步
-- 莫爾特拉奇冰川 Morteratsch Glacier
-- 市區購物與高級餐廳
+    <div class="form-card">
+      <div class="section-title">紀律提醒規則</div>
+      <div id="rule-tags" style="margin-bottom: 14px;"></div>
+      <div class="input-row">
+        <div class="input-group">
+          <input type="text" id="newRule" placeholder="例如：不追高，只等回測...">
+        </div>
+        <div style="flex-shrink:0;">
+          <button class="btn-save" style="margin-top:0; padding:10px 18px; width:auto;" onclick="addRule()">新增</button>
+        </div>
+      </div>
+    </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 距策馬特 | 車程約 3 小時（經 Furka Pass） |
-| 海拔 | 1,822 m |
-`
-      },
-      'docs/景點/伯連納列車.md': {
-        img: 'https://images.unsplash.com/photo-1474487548417-781cb6d646b2?w=800&q=80',
-        md: `## 行程：D10（6/22）
+    <div class="form-card">
+      <div class="section-title">通知設定</div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">盤前計劃提醒</div>
+          <div class="setting-desc">每日 8:30 提醒填寫盤前計劃</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cfg-premktReminder" checked>
+          <div class="toggle-slider"></div>
+        </label>
+      </div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">每日虧損達上限提醒</div>
+          <div class="setting-desc">超出設定的每日虧損後警示</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cfg-lossAlert" checked>
+          <div class="toggle-slider"></div>
+        </label>
+      </div>
+    </div>
 
-## 路線
-聖莫里茲 → 白湖 Lago Bianco → Brusio 螺旋橋 → Tirano（義大利）
+    <div class="form-card">
+      <div class="section-title">資料管理</div>
+      <button class="btn-outline" onclick="exportData()">📥 匯出所有資料 (JSON)</button>
+      <button class="btn-outline" onclick="importData()">📤 匯入資料 (JSON)</button>
+      <button class="btn-danger" onclick="clearAllData()">🗑️ 清除所有交易紀錄</button>
+    </div>
 
-## 亮點
-- 白湖 Lago Bianco 雪山倒影
-- Brusio 螺旋橋（UNESCO 世界遺產）
-- Tirano 義式午餐＋教堂
+    <div style="padding: 0 16px 8px;">
+      <button class="btn-save" onclick="saveSettings()">儲存設定</button>
+    </div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 訂票 | sbb.ch 或 rhb.ch |
-| 建議 | 提前訂位，選靠窗座位 |
-| 全景車廂 | 另加訂位費 |
-`
-      },
-      'docs/景點/藍湖.md': {
-        img: 'https://images.unsplash.com/photo-1439792675105-701e6a4ab6f0?w=800&q=80',
-        md: `## 行程：D8（6/20）順路
+  </div>
 
-## 簡介
-湖水呈透明湛藍色，因湖底白色砂石反射而得名。湖邊有鱒魚養殖場與餐廳。
+  <!-- 底部導航列 -->
+  <div class="bottom-nav">
+    <div class="nav-item" id="nav-premarket" onclick="switchTab('premarket')">📋<br>盤前</div>
+    <div class="nav-item active" id="nav-trade" onclick="switchTab('trade')">⚡️<br>交易</div>
+    <div class="nav-item" id="nav-stats" onclick="switchTab('stats')">📊<br>統計</div>
+    <div class="nav-item" id="nav-settings" onclick="switchTab('settings')">⚙️<br>設定</div>
+  </div>
+</div>
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 位置 | Kandergrund，Kandersteg 附近 |
-| 官網 | blausee.ch |
-`
-      },
-      'docs/景點/海蒂村.md': {
-        img: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=80',
-        md: `## 行程：D11（6/23）順路
+<script>
 
-## 簡介
-小說《海蒂》的故事背景地，可參觀海蒂小屋、博物館與葡萄園步道。
+// =====================================================
+// 資料層：localStorage (後續可換成 IndexedDB)
+// =====================================================
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 距聖莫里茲 | 車程約 1 小時 |
-| 官網 | heididorf.ch |
-`
-      },
-      'docs/景點/列支敦士登.md': {
-        img: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80',
-        md: `## 行程：D11（6/23）順路
+const DB = {
+  getTrades: () => JSON.parse(localStorage.getItem('trades') || '[]'),
+  saveTrades: (arr) => localStorage.setItem('trades', JSON.stringify(arr)),
+  getSettings: () => JSON.parse(localStorage.getItem('settings') || 'null') || defaultSettings(),
+  saveSettings: (cfg) => localStorage.setItem('settings', JSON.stringify(cfg)),
+  getPremarket: (date) => JSON.parse(localStorage.getItem('premarket_' + date) || 'null'),
+  savePremarket: (date, data) => localStorage.setItem('premarket_' + date, JSON.stringify(data)),
+};
 
-## 景點
-- 瓦杜茲城堡 Vaduz Castle（外觀參觀）
-- 市區步行街
-- 郵局蓋護照紀念章（付費）
+function defaultSettings() {
+  return {
+    maxRisk: 1,
+    dailyMaxLoss: -3,
+    minWinRate: 40,
+    strategies: ['突破前高/低', '均線回檔', '乖離反彈'],
+    rules: ['不追高，只等回測', '進場前確認停損位置'],
+    premktReminder: true,
+    lossAlert: true,
+  };
+}
 
-## 實用資訊
-| 項目 | 說明 |
-|------|------|
-| 距海蒂村 | 車程約 30 分鐘 |
-| 面積 | 160 km²，全球第六小國 |
-`
+// =====================================================
+// 分頁切換
+// =====================================================
+
+const TAB_TITLES = {
+  premarket: '📋 今日盤前計劃',
+  trade: '新增交易紀錄',
+  stats: '📊 交易統計',
+  settings: '⚙️ 設定',
+};
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+  document.getElementById('pageTitle').textContent = TAB_TITLES[tab];
+
+  if (tab === 'stats') renderStats();
+  if (tab === 'settings') renderSettingsPage();
+  if (tab === 'premarket') renderPremarketPage();
+  if (tab === 'trade') renderStrategyOptions();
+}
+
+// =====================================================
+// 交易分頁
+// =====================================================
+
+const priceInputs = ['direction', 'entryPrice', 'stopLoss', 'exitPrice'];
+priceInputs.forEach(id => document.getElementById(id).addEventListener('input', calculateR));
+
+function calculateR() {
+  const direction = document.getElementById('direction').value;
+  const entry = parseFloat(document.getElementById('entryPrice').value);
+  const stop = parseFloat(document.getElementById('stopLoss').value);
+  const exit = parseFloat(document.getElementById('exitPrice').value);
+  const rDisplay = document.getElementById('rDisplay');
+
+  if (isNaN(entry) || isNaN(stop) || isNaN(exit)) {
+    rDisplay.innerText = '0.00 R';
+    rDisplay.className = 'r-display';
+    return;
+  }
+
+  let risk, rMultiple;
+  if (direction === 'long') {
+    risk = entry - stop;
+    if (risk <= 0) { rDisplay.innerText = '停損設定錯誤'; return; }
+    rMultiple = (exit - entry) / risk;
+  } else {
+    risk = stop - entry;
+    if (risk <= 0) { rDisplay.innerText = '停損設定錯誤'; return; }
+    rMultiple = (entry - exit) / risk;
+  }
+
+  rDisplay.innerText = rMultiple.toFixed(2) + ' R';
+  rDisplay.className = rMultiple < 0 ? 'r-display negative' : 'r-display';
+}
+
+function renderStrategyOptions() {
+  const cfg = DB.getSettings();
+  const sel = document.getElementById('strategy');
+  sel.innerHTML = cfg.strategies.map(s => `<option value="${s}">${s}</option>`).join('');
+}
+
+function saveTrade() {
+  const symbol = document.getElementById('symbol').value.trim();
+  const entry = parseFloat(document.getElementById('entryPrice').value);
+  const stop = parseFloat(document.getElementById('stopLoss').value);
+  const exit = parseFloat(document.getElementById('exitPrice').value);
+
+  if (!symbol) { alert('請填寫標的代號'); return; }
+  if (isNaN(entry) || isNaN(stop) || isNaN(exit)) { alert('請填寫完整價格資訊'); return; }
+
+  const rText = document.getElementById('rDisplay').innerText;
+  const rMultiple = parseFloat(rText.replace(' R', '')) || 0;
+
+  const tradeData = {
+    id: crypto.randomUUID(),
+    date: new Date().toISOString().split('T')[0],
+    symbol: symbol.toUpperCase(),
+    direction: document.getElementById('direction').value,
+    strategy: document.getElementById('strategy').value,
+    entry,
+    stop,
+    exit,
+    rMultiple,
+    entryEmotion: document.getElementById('entryEmotion').value,
+    exitEmotion: document.getElementById('exitEmotion').value,
+    planFollowed: document.getElementById('planFollowed').value === 'true',
+    notes: document.getElementById('notes').value,
+  };
+
+  const trades = DB.getTrades();
+  trades.unshift(tradeData);
+  DB.saveTrades(trades);
+
+  alert(`✅ 已記錄！\n標的: ${tradeData.symbol}\nR倍數: ${tradeData.rMultiple.toFixed(2)}R`);
+
+  // 清空表單
+  ['symbol', 'entryPrice', 'stopLoss', 'exitPrice', 'notes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('rDisplay').innerText = '0.00 R';
+  document.getElementById('rDisplay').className = 'r-display';
+}
+
+// =====================================================
+// 盤前分頁
+// =====================================================
+
+let watchlist = [];
+let selectedMood = '';
+
+function selectMood(el) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMood = el.dataset.mood;
+}
+
+function addWatchItem() {
+  const symbol = document.getElementById('watchSymbol').value.trim().toUpperCase();
+  const reason = document.getElementById('watchReason').value.trim();
+  if (!symbol) return;
+  watchlist.push({ symbol, reason });
+  document.getElementById('watchSymbol').value = '';
+  document.getElementById('watchReason').value = '';
+  renderWatchlist();
+}
+
+function renderWatchlist() {
+  const ul = document.getElementById('watchlist');
+  if (watchlist.length === 0) {
+    ul.innerHTML = '<li style="color:var(--text-muted); font-size:0.85rem; padding:8px 0;">尚未加入任何標的</li>';
+    return;
+  }
+  ul.innerHTML = watchlist.map((item, i) => `
+    <li>
+      <div>
+        <div class="watchlist-symbol">${item.symbol}</div>
+        <div class="watchlist-note">${item.reason || '無備註'}</div>
+      </div>
+      <span class="watchlist-remove" onclick="removeWatch(${i})">✕</span>
+    </li>
+  `).join('');
+}
+
+function removeWatch(i) {
+  watchlist.splice(i, 1);
+  renderWatchlist();
+}
+
+function renderPremarketPage() {
+  const today = new Date().toISOString().split('T')[0];
+  const saved = DB.getPremarket(today);
+  const cfg = DB.getSettings();
+
+  // 顯示紀律規則
+  const rulesDiv = document.getElementById('rulesDisplay');
+  rulesDiv.innerHTML = cfg.rules.map(r => `<span class="condition-tag">${r}</span>`).join('');
+
+  if (saved) {
+    // 回填已儲存的盤前計劃
+    document.getElementById('marketTrend').value = saved.marketTrend || 'uptrend';
+    document.getElementById('tradingPermission').value = saved.tradingPermission || 'full';
+    document.getElementById('marketNotes').value = saved.marketNotes || '';
+    document.getElementById('todayReminder').value = saved.todayReminder || '';
+    watchlist = saved.watchlist || [];
+    selectedMood = saved.mood || '';
+    document.querySelectorAll('.mood-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.mood === selectedMood);
+    });
+    renderWatchlist();
+  } else {
+    watchlist = [];
+    renderWatchlist();
+  }
+}
+
+function savePremarket() {
+  const today = new Date().toISOString().split('T')[0];
+  const data = {
+    date: today,
+    mood: selectedMood,
+    marketTrend: document.getElementById('marketTrend').value,
+    tradingPermission: document.getElementById('tradingPermission').value,
+    marketNotes: document.getElementById('marketNotes').value,
+    todayReminder: document.getElementById('todayReminder').value,
+    watchlist: [...watchlist],
+  };
+  DB.savePremarket(today, data);
+  alert('✅ 盤前計劃已儲存！');
+}
+
+// =====================================================
+// 統計分頁
+// =====================================================
+
+let currentFilter = 'all';
+
+function setFilter(filter, el) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderTradeList();
+}
+
+function renderStats() {
+  const trades = DB.getTrades();
+  if (trades.length === 0) {
+    document.getElementById('stat-total').textContent = '0';
+    document.getElementById('stat-winrate').textContent = '0%';
+    document.getElementById('stat-avgr').textContent = '0.00R';
+    document.getElementById('stat-planfollow').textContent = '0%';
+    document.getElementById('stat-totalr').textContent = '0.00R';
+    document.getElementById('stat-totalr-bar').style.width = '0%';
+    document.getElementById('strategy-stats').innerHTML = '<div class="empty-state"><div class="emoji">📊</div>尚無資料</div>';
+    document.getElementById('emotion-stats').innerHTML = '';
+    renderTradeList();
+    return;
+  }
+
+  const wins = trades.filter(t => t.rMultiple > 0);
+  const winRate = (wins.length / trades.length * 100).toFixed(1);
+  const avgR = (trades.reduce((s, t) => s + t.rMultiple, 0) / trades.length).toFixed(2);
+  const totalR = trades.reduce((s, t) => s + t.rMultiple, 0).toFixed(2);
+  const planFollowRate = (trades.filter(t => t.planFollowed).length / trades.length * 100).toFixed(1);
+
+  document.getElementById('stat-total').textContent = trades.length;
+  document.getElementById('stat-winrate').textContent = winRate + '%';
+  document.getElementById('stat-winrate').className = 'stat-value ' + (winRate >= 50 ? 'positive' : 'negative');
+  document.getElementById('stat-avgr').textContent = avgR + 'R';
+  document.getElementById('stat-avgr').className = 'stat-value ' + (avgR >= 0 ? 'positive' : 'negative');
+  document.getElementById('stat-planfollow').textContent = planFollowRate + '%';
+  document.getElementById('stat-totalr').textContent = totalR + 'R';
+  const barPct = Math.min(Math.abs(totalR) / Math.max(trades.length * 2, 1) * 100, 100);
+  document.getElementById('stat-totalr-bar').style.width = barPct + '%';
+  document.getElementById('stat-totalr-bar').className = 'bar-fill ' + (totalR >= 0 ? 'positive' : 'negative');
+
+  // 策略統計
+  renderStrategyStats(trades);
+  renderEmotionStats(trades);
+  renderTradeList();
+}
+
+function renderStrategyStats(trades) {
+  const cfg = DB.getSettings();
+  const container = document.getElementById('strategy-stats');
+
+  const stratMap = {};
+  trades.forEach(t => {
+    if (!stratMap[t.strategy]) stratMap[t.strategy] = { wins: 0, total: 0, totalR: 0 };
+    stratMap[t.strategy].total++;
+    stratMap[t.strategy].totalR += t.rMultiple;
+    if (t.rMultiple > 0) stratMap[t.strategy].wins++;
+  });
+
+  if (Object.keys(stratMap).length === 0) {
+    container.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">尚無資料</div>';
+    return;
+  }
+
+  container.innerHTML = Object.entries(stratMap).map(([name, s]) => {
+    const wr = (s.wins / s.total * 100).toFixed(0);
+    const avgR = (s.totalR / s.total).toFixed(2);
+    return `
+      <div class="bar-container">
+        <div class="bar-label">
+          <span>${name} <small style="color:var(--text-muted)">(${s.total}筆, avg ${avgR}R)</small></span>
+          <span>${wr}%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill ${wr >= 50 ? 'positive' : 'negative'}" style="width:${wr}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+const EMOTION_LABELS = {
+  calm: '冷靜', fomo: 'FOMO', anxious: '焦慮', revenge: '報復性', greed: '貪婪', panic: '恐慌'
+};
+
+function renderEmotionStats(trades) {
+  const container = document.getElementById('emotion-stats');
+  const emotionMap = {};
+
+  trades.forEach(t => {
+    const e = t.entryEmotion;
+    if (!emotionMap[e]) emotionMap[e] = { total: 0, totalR: 0 };
+    emotionMap[e].total++;
+    emotionMap[e].totalR += t.rMultiple;
+  });
+
+  container.innerHTML = Object.entries(emotionMap).map(([emotion, s]) => {
+    const avgR = (s.totalR / s.total).toFixed(2);
+    return `
+      <div class="setting-row" style="padding:10px 0;">
+        <span class="emotion-tag ${emotion}">${EMOTION_LABELS[emotion] || emotion}</span>
+        <div style="text-align:right">
+          <div style="font-weight:bold; color:${avgR >= 0 ? 'var(--success)' : 'var(--danger)'}">平均 ${avgR}R</div>
+          <div style="font-size:0.78rem; color:var(--text-muted)">${s.total} 筆</div>
+        </div>
+      </div>
+    `;
+  }).join('') || '<div style="color:var(--text-muted); font-size:0.85rem;">尚無資料</div>';
+}
+
+function renderTradeList() {
+  const allTrades = DB.getTrades();
+  let trades = allTrades;
+
+  if (currentFilter === 'win') trades = allTrades.filter(t => t.rMultiple > 0);
+  else if (currentFilter === 'loss') trades = allTrades.filter(t => t.rMultiple < 0);
+  else if (currentFilter === 'plan-yes') trades = allTrades.filter(t => t.planFollowed);
+  else if (currentFilter === 'plan-no') trades = allTrades.filter(t => !t.planFollowed);
+
+  const container = document.getElementById('trade-list');
+  if (trades.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="emoji">📭</div>此篩選條件下無紀錄</div>';
+    return;
+  }
+
+  container.innerHTML = trades.map(t => `
+    <div class="trade-list-item">
+      <div>
+        <div class="trade-symbol">${t.symbol} <small style="color:var(--text-muted);font-weight:normal">${t.direction === 'long' ? '↑多' : '↓空'}</small></div>
+        <div class="trade-meta">${t.date} · ${t.strategy}</div>
+        <div class="trade-meta" style="margin-top:2px;">
+          <span class="emotion-tag ${t.entryEmotion}" style="font-size:0.72rem; padding:2px 7px;">${EMOTION_LABELS[t.entryEmotion]||t.entryEmotion}</span>
+          ${!t.planFollowed ? '<span style="color:var(--danger);font-size:0.75rem;margin-left:4px;">⚠️ 偏移</span>' : ''}
+        </div>
+      </div>
+      <div class="trade-r ${t.rMultiple >= 0 ? 'positive' : 'negative'}">${t.rMultiple >= 0 ? '+' : ''}${t.rMultiple.toFixed(2)}R</div>
+    </div>
+  `).join('');
+}
+
+// =====================================================
+// 設定分頁
+// =====================================================
+
+function renderSettingsPage() {
+  const cfg = DB.getSettings();
+  document.getElementById('cfg-maxRisk').value = cfg.maxRisk;
+  document.getElementById('cfg-dailyMaxLoss').value = cfg.dailyMaxLoss;
+  document.getElementById('cfg-minWinRate').value = cfg.minWinRate;
+  document.getElementById('cfg-premktReminder').checked = cfg.premktReminder;
+  document.getElementById('cfg-lossAlert').checked = cfg.lossAlert;
+
+  // 策略標籤
+  const stDiv = document.getElementById('strategy-tags');
+  stDiv.innerHTML = cfg.strategies.map((s, i) => `
+    <span class="strategy-tag-edit">${s}
+      <span class="remove" onclick="removeStrategy(${i})">✕</span>
+    </span>
+  `).join('');
+
+  // 規則標籤
+  const rDiv = document.getElementById('rule-tags');
+  rDiv.innerHTML = cfg.rules.map((r, i) => `
+    <span class="strategy-tag-edit">${r}
+      <span class="remove" onclick="removeRule(${i})">✕</span>
+    </span>
+  `).join('');
+}
+
+function addStrategy() {
+  const val = document.getElementById('newStrategy').value.trim();
+  if (!val) return;
+  const cfg = DB.getSettings();
+  cfg.strategies.push(val);
+  DB.saveSettings(cfg);
+  document.getElementById('newStrategy').value = '';
+  renderSettingsPage();
+}
+
+function removeStrategy(i) {
+  const cfg = DB.getSettings();
+  cfg.strategies.splice(i, 1);
+  DB.saveSettings(cfg);
+  renderSettingsPage();
+}
+
+function addRule() {
+  const val = document.getElementById('newRule').value.trim();
+  if (!val) return;
+  const cfg = DB.getSettings();
+  cfg.rules.push(val);
+  DB.saveSettings(cfg);
+  document.getElementById('newRule').value = '';
+  renderSettingsPage();
+}
+
+function removeRule(i) {
+  const cfg = DB.getSettings();
+  cfg.rules.splice(i, 1);
+  DB.saveSettings(cfg);
+  renderSettingsPage();
+}
+
+function saveSettings() {
+  const cfg = DB.getSettings();
+  cfg.maxRisk = parseFloat(document.getElementById('cfg-maxRisk').value);
+  cfg.dailyMaxLoss = parseFloat(document.getElementById('cfg-dailyMaxLoss').value);
+  cfg.minWinRate = parseFloat(document.getElementById('cfg-minWinRate').value);
+  cfg.premktReminder = document.getElementById('cfg-premktReminder').checked;
+  cfg.lossAlert = document.getElementById('cfg-lossAlert').checked;
+  DB.saveSettings(cfg);
+  alert('✅ 設定已儲存！');
+}
+
+function exportData() {
+  const data = {
+    trades: DB.getTrades(),
+    settings: DB.getSettings(),
+    exportedAt: new Date().toISOString(),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'trade_journal_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+}
+
+function importData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.trades) DB.saveTrades(data.trades);
+        if (data.settings) DB.saveSettings(data.settings);
+        alert('✅ 資料匯入成功！');
+        renderSettingsPage();
+      } catch {
+        alert('❌ 檔案格式錯誤，請確認是正確的 JSON 備份檔');
       }
     };
+    reader.readAsText(file);
+  };
+  input.click();
+}
 
-    function openSpotModal(mdPath, img, title, en) {
-      var data = spotsData[mdPath];
-      var body = document.getElementById('modalBody');
+function clearAllData() {
+  if (!confirm('⚠️ 確定要刪除所有交易紀錄？此操作無法復原！')) return;
+  DB.saveTrades([]);
+  alert('已清除所有交易紀錄');
+}
 
-      document.getElementById('modalHero').style.backgroundImage = "url('" + img + "')";
-      document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalEn').textContent = en;
-      document.getElementById('spotModalOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
+// =====================================================
+// 初始化
+// =====================================================
 
-      if (data && data.md) {
-        var html = window.marked ? window.marked.parse(data.md) : '<pre>' + data.md + '</pre>';
-        body.innerHTML = html + '<a class="spot-modal-link" href="#/' + mdPath + '">查看完整頁面 →</a>';
-      } else {
-        body.innerHTML = '<p style="color:#aaa">尚無內容</p>';
-      }
+renderStrategyOptions();
+
+// =====================================================
+// PWA：Service Worker 註冊
+// =====================================================
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] 已註冊', reg.scope))
+      .catch(err => console.warn('[SW] 註冊失敗', err));
+  });
+}
+
+// PWA：安裝提示 Banner
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('install-banner').style.display = 'flex';
+});
+
+function installApp() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(result => {
+    if (result.outcome === 'accepted') {
+      document.getElementById('install-banner').style.display = 'none';
     }
+    deferredPrompt = null;
+  });
+}
 
-    function closeModal() {
-      document.getElementById('spotModalOverlay').classList.remove('active');
-      document.body.style.overflow = '';
-    }
+function dismissInstall() {
+  document.getElementById('install-banner').style.display = 'none';
+  deferredPrompt = null;
+}
 
-    function closeSpotModal(e) {
-      if (e.target === document.getElementById('spotModalOverlay')) closeModal();
-    }
+// 已安裝後隱藏 Banner
+window.addEventListener('appinstalled', () => {
+  document.getElementById('install-banner').style.display = 'none';
+});
 
-    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
-  </script>
+</script>
 </body>
 </html>
