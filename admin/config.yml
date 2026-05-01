@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: ThomasTsao0704/trip
+  branch: main
+  base_url: https://trip.s01yg3642.workers.dev
+  auth_endpoint: /auth
+
+media_folder: "docs/static/uploads"
+public_folder: "/docs/static/uploads"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    folder: "docs"
+    create: false
+    extension: "md"
+    editor:
+      preview: false
+    fields:
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "spots"
+    label: "Spots"
+    folder: "docs/景點"
+    create: false
+    extension: "md"
+    editor:
+      preview: false
+    fields:
+      - { label: "Body", name: "body", widget: "markdown" }

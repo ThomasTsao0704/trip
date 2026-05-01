@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#4f46e5"/>
+  <!-- book body -->
+  <rect x="136" y="112" width="240" height="288" rx="18" fill="white" opacity="0.96"/>
+  <!-- spine -->
+  <rect x="136" y="112" width="28" height="288" rx="10" fill="#818cf8"/>
+  <!-- text lines -->
+  <rect x="192" y="184" width="148" height="14" rx="7" fill="#c7d2fe"/>
+  <rect x="192" y="218" width="148" height="14" rx="7" fill="#c7d2fe"/>
+  <rect x="192" y="252" width="112" height="14" rx="7" fill="#c7d2fe"/>
+  <rect x="192" y="300" width="148" height="14" rx="7" fill="#e0e7ff"/>
+  <rect x="192" y="334" width="120" height="14" rx="7" fill="#e0e7ff"/>
+  <!-- bookmark ribbon -->
+  <polygon points="296,112 328,112 328,176 312,160 296,176" fill="#a5b4fc"/>
+</svg>
