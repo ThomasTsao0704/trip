@@ -1,0 +1,54 @@
+{
+  "notes": [
+    {
+      "id": "1234",
+      "path": "vault/1234.md",
+      "title": "V1",
+      "tags": [],
+      "date": "2026-03-17T00:00:00.000Z",
+      "excerpt": "1234 <img src=\"vault/images/ChatGPTImage2026年3月15日上午032814.png\" alt=\"ChatGPTImage2026年3月15日上午032814.png\" style=\"width:25%\"<img src=\"vault/images/ChatGPTImage202"
+    },
+    {
+      "id": "c",
+      "path": "vault/c.md",
+      "title": "c",
+      "tags": [],
+      "date": "2026-03-18T00:00:00.000Z",
+      "excerpt": ""
+    },
+    {
+      "id": "test",
+      "path": "vault/test.md",
+      "title": "test",
+      "tags": [
+        "教學",
+        "入門",
+        "設計"
+      ],
+      "date": "2026-03-17T00:00:00.000Z",
+      "excerpt": "V1 1234 test 🧠 程式碼提示詞設計手冊 Engineering Prompt Playbook 這不是教你寫 Prompt，而是教你如何「與工程思維對話」。 --- 🎯 本手冊適合誰？ - 想把 AI 當「工程夥伴」而不是聊天機器 - 常寫程式、Debug、做專案、重構系統 - 想讓 AI 產出 可用、"
+    },
+    {
+      "id": "X",
+      "path": "vault/X.md",
+      "title": "X",
+      "tags": [],
+      "date": "2026-03-18T00:00:00.000Z",
+      "excerpt": "制度跟規範是用來限制，不能超過的那條底限，但是不代表可以無限擴張那個界線 你這句話其實觸碰到一個非常核心的制度哲學問題： 「規則是底線，還是邊界？」 很多社會爭議，本質上都是因為人們把「底線」誤當成「允許的範圍」。 我先把你的觀點稍微整理成一個更精確的邏輯。 一、制度與規範，本質是「底線」 制度通常是在定義： 最低可接"
+    },
+    {
+      "id": "新增",
+      "path": "vault/新增.md",
+      "title": "新增",
+      "tags": [],
+      "date": "2026-03-17T00:00:00.000Z",
+      "excerpt": "!1000032537.png(vault/images/1000032537.png) tittle tittle2"
+    }
+  ],
+  "tags": [
+    "入門",
+    "教學",
+    "設計"
+  ],
+  "updatedAt": "2026-03-18T09:24:36.265Z"
+}
